@@ -7,7 +7,6 @@
 typedef struct {
     int id;
     char nome[50];
-
     char telefone[20];
     char cidade[30];
     char endereco[50];
@@ -36,21 +35,23 @@ void cadastrarAluno() {
 
     int ultimoID = 0;
     if (arquivo != NULL) {
-        while (fscanf(arquivo, "%d;%*[^;];%*[^;];%*[^;];%*[^;];%*[^;]\n", &ultimoID) == 1);
-        fclose(arquivo);
+        while (fscanf(arquivo, "%d\n", &ultimoID) == 1) { // == 1 conseguiu ler um numero inteiro, o valor é armazenado na variavel ultimoID
+            fscanf(arquivo, "%*[^\n]\n");  // Descartar os dados dos outros campos (linha), ignora os dados até encontrar o \n
+        }
+        fclose(arquivo); 
     }
 
     novo.id = ultimoID + 1;
     printf("\nDigite o nome: ");
-    scanf(" %49s", novo.nome);
+    scanf(" %s", novo.nome);
     printf("Digite o telefone: ");
-    scanf(" %19s", novo.telefone);
+    scanf(" %s", novo.telefone);
     printf("Digite a cidade: ");
-    scanf(" %29s", novo.cidade);
+    scanf(" %s", novo.cidade);
     printf("Digite o endereco: ");
-    scanf(" %49s", novo.endereco);
+    scanf(" %s", novo.endereco);
     printf("Digite o email: ");
-    scanf(" %49s", novo.email);
+    scanf(" %s", novo.email);
 
     salvarAlunosEmArquivo(novo);
     printf("\nAluno cadastrado com sucesso!\n");
